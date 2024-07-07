@@ -7,7 +7,7 @@ type Props = {
   stripes: any;
   children?: React.ReactNode;
   style?: any;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const Rainbow = ({ stripes, children, className }: Props) => {

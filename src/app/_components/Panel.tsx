@@ -4,6 +4,8 @@ import styled, { css } from "styled-components";
 const heading = css`
   font-size: 32px;
   font-family: "NeutraText-Bold";
+  margin: 20px 0;
+  display: block;
 `;
 const PanelSection = styled.section<{ wide: boolean }>`
   margin: 5em 0 1.5em;
@@ -13,7 +15,7 @@ const PanelSection = styled.section<{ wide: boolean }>`
       max-width: 50em;
     `}
 
-  .custom-desc h2 {
+  h2 {
     ${heading}
   }
 `;
@@ -43,7 +45,7 @@ type Props = {
   heading?: string;
   id?: string;
   wide?: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const Panel = ({ heading, children, id, wide = false }: Props) => (
