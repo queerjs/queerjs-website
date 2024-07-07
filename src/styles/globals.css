@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("animate.css/source/animate.css");
+@import url("../app/fonts/neutra-text/style.css");
+@import url("https://api.fonts.coollabs.io/css2?family=Roboto+Mono&display=swap");

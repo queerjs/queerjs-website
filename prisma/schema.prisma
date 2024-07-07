@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model attendees {
+  ghLink          String?
+  name            String?
+  city            String?
+  xata_updatedat  DateTime          @default(now()) @db.Timestamptz(6)
+  xata_id         String            @unique(map: "_pgroll_new_attendees_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version    Int               @default(0)
+  xata_createdat  DateTime          @default(now()) @db.Timestamptz(6)
+  meetup_atendees meetup_atendees[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model hosts {
+  xata_updatedat DateTime       @default(now()) @db.Timestamptz(6)
+  xata_id        String         @unique(map: "_pgroll_new_hosts_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version   Int            @default(0)
+  xata_createdat DateTime       @default(now()) @db.Timestamptz(6)
+  media          Json?
+  link           String?
+  name           String?
+  meetup_hosts   meetup_hosts[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model meetup_hosts {
+  host_id        String   @db.VarChar(100)
+  meetup_id      String   @db.VarChar(100)
+  xata_id        String   @unique(map: "meetup_hosts__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version   Int      @default(0)
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  hosts          hosts    @relation(fields: [host_id], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+  meetups        meetups  @relation(fields: [meetup_id], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([host_id, meetup_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model meetup_organziers {
+  organizer_id   String     @db.VarChar(100)
+  meetup_id      String     @db.VarChar(100)
+  xata_id        String     @unique(map: "meetup_organziers__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version   Int        @default(0)
+  xata_createdat DateTime   @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime   @default(now()) @db.Timestamptz(6)
+  meetups        meetups    @relation(fields: [meetup_id], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+  organizers     organizers @relation(fields: [organizer_id], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([organizer_id, meetup_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model meetup_speakers {
+  speaker_id     String   @db.VarChar(100)
+  meetup_id      String   @db.VarChar(100)
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  xata_id        String   @unique(map: "meetup_speakers__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version   Int      @default(0)
+  meetups        meetups  @relation(fields: [meetup_id], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+  speakers       speakers @relation(fields: [speaker_id], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([speaker_id, meetup_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model meetups {
+  xata_updatedat                         DateTime            @default(now()) @db.Timestamptz(6)
+  xata_id                                String              @unique(map: "_pgroll_new_meetups_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version                           Int                 @default(0)
+  xata_createdat                         DateTime            @default(now()) @db.Timestamptz(6)
+  city                                   String?
+  slug                                   String?             @unique(map: "meetups__pgroll_new_slug_key")
+  date                                   DateTime?           @db.Timestamptz(6)
+  icon                                   Json?
+  icon_hover                             Json?
+  food                                   Boolean?            @default(false)
+  cfp                                    Boolean?            @default(true)
+  rsvpsClosed                            Boolean?            @default(false)
+  maxCapacity                            BigInt?
+  googleMapsLink                         String?
+  calendarLink                           String?
+  customDescription                      String?
+  fullDescription                        Boolean?            @default(false)
+  locationName                           String?
+  meetup_atendees                        meetup_atendees[]
+  meetup_hosts                           meetup_hosts[]
+  meetup_organziers                      meetup_organziers[]
+  meetup_speakers                        meetup_speakers[]
+  organizers_organizers_meetupsTomeetups organizers[]        @relation("organizers_meetupsTomeetups")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model organizers {
+  xata_createdat                      DateTime            @default(now()) @db.Timestamptz(6)
+  xata_updatedat                      DateTime            @default(now()) @db.Timestamptz(6)
+  xata_id                             String              @unique(map: "_pgroll_new_organizers_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version                        Int                 @default(0)
+  name                                String
+  twitter                             String?
+  github                              String?
+  email                               String?
+  phone                               String?
+  meetups                             String?             @db.VarChar(100)
+  meetup_organziers                   meetup_organziers[]
+  meetups_organizers_meetupsTomeetups meetups?            @relation("organizers_meetupsTomeetups", fields: [meetups], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model speakers {
+  xata_createdat  DateTime          @default(now()) @db.Timestamptz(6)
+  xata_updatedat  DateTime          @default(now()) @db.Timestamptz(6)
+  xata_id         String            @unique(map: "_pgroll_new_speakers_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version    Int               @default(0)
+  name            String
+  github          String?
+  talk            String?
+  link            String?
+  MC              Boolean?          @default(false)
+  meetup_speakers meetup_speakers[]
+}
+
+model meetup_atendees {
+  attendee_id String    @db.VarChar(100)
+  meetup_id   String    @db.VarChar(100)
+  attendees   attendees @relation(fields: [attendee_id], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+  meetups     meetups   @relation(fields: [meetup_id], references: [xata_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([attendee_id, meetup_id])
+}
