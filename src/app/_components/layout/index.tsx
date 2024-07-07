@@ -4,13 +4,17 @@ import { ThemeProvider } from "styled-components";
 import { theme, Global, Wrapper, SubWrapper, SideRainbow } from "./elements";
 import Footer from "../footer";
 
-const Layout = ({ children, siteTitle }) => (
-  <ThemeProvider theme={theme}>
+type Props = {
+  children: React.ReactNode;
+};
+
+const Layout = ({ children }: Props) => (
+  <ThemeProvider theme={theme as any}>
     <>
       <SideRainbow />
       <Global />
       <Wrapper>
-        <Header siteTitle={siteTitle} />
+        <Header />
         <SubWrapper>{children}</SubWrapper>
         <Footer />
       </Wrapper>

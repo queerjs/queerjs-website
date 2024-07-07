@@ -97,6 +97,7 @@ model meetups {
   customDescription                      String?
   fullDescription                        Boolean?            @default(false)
   locationName                           String?
+  bySeason                               String?
   meetup_atendees                        meetup_atendees[]
   meetup_hosts                           meetup_hosts[]
   meetup_organziers                      meetup_organziers[]

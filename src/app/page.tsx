@@ -11,13 +11,21 @@ export default function Home() {
   const meetups = api.meetup.getAll.useQuery();
   if (!meetups.data) return null;
   const sortedCities = meetups.data
-    .sort((a, b) => new Date(a.xata_createdat) - new Date(b.xata_createdat))
+    .sort(
+      (a, b) =>
+        new Date(a.xata_createdat).getTime() -
+        new Date(b.xata_createdat).getTime(),
+    )
     .reverse();
   const futureMeetups = sortedCities.filter(
-    (city) => isFuture(new Date(city.date)) || isToday(new Date(city.date)),
+    (city) =>
+      isFuture(new Date(city.date as Date)) ||
+      isToday(new Date(city.date as Date)),
   );
   const pastMeetups = sortedCities.filter(
-    (city) => !isFuture(new Date(city.date)) && !isToday(new Date(city.date)),
+    (city) =>
+      !isFuture(new Date(city.date as Date)) &&
+      !isToday(new Date(city.date as Date)),
   );
 
   return (
@@ -48,7 +56,7 @@ export default function Home() {
         <Panel wide heading="Upcoming meetups">
           <Cities>
             {futureMeetups.map((node) => (
-              <City {...node} key={node.id} />
+              <City {...node} key={node.xata_id} />
             ))}
           </Cities>
         </Panel>
@@ -57,7 +65,7 @@ export default function Home() {
         <Panel wide heading="Past Meetups">
           <Cities>
             {pastMeetups.map((node) => (
-              <City {...node} past key={node.id} />
+              <City {...node} past key={node.xata_id} />
             ))}
           </Cities>
         </Panel>

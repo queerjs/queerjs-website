@@ -32,7 +32,6 @@ interface CityProps {
   bySeason: string;
   icon: XataImage;
   icon_hover: XataImage;
-  hostIcon: XataImage;
   host: hosts & {
     media: XataImage;
   };
