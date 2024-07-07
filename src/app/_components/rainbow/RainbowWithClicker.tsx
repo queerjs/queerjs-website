@@ -7,9 +7,9 @@ import { useRainbow } from "../../hooks/useRainbow";
 type Props = {
   className?: string;
   flag?: string;
-  stripes: string[];
+  stripes?: string[];
   styles?: any;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const RainbowWithClicker = ({ className, flag, ...props }: Props) => {

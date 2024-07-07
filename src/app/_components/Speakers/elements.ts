@@ -89,7 +89,7 @@ export const UnstyledLink = styled(Link)`
   position: relative;
 `;
 
-export const ListItem = styled.li`
+export const ListItem = styled.li<{ talk: string | null }>`
   position: relative;
   list-style: none;
   margin: auto;

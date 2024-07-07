@@ -1,31 +1,33 @@
 import React, { useState } from "react";
-import createRecord from "../../helpers/airtable";
 import { Button, Form } from "./elements";
+import { api } from "~/trpc/react";
 
-const Signup = ({ onSubmit, city }) => {
+const Signup = ({ onSubmit, city }: { onSubmit: () => void; city: string }) => {
   const [name, setName] = useState("");
   const [gh, setGH] = useState("");
   const [plusOne, setPlusOne] = useState(false);
   const [plusOneName, setPlusOneName] = useState("");
   const [plusOneGH, setPlusOneGH] = useState("");
-
-  const createUser = () => {
+  const { mutateAsync } = api.attendees.create.useMutation();
+  const utils = api.useUtils();
+  const createUser = async () => {
     if (name) {
       if (plusOne && !plusOneName) return;
 
-      createRecord({
+      mutateAsync({
         city: city,
         name: name,
         ghLink: gh || "QueerJS",
       });
 
       if (plusOne) {
-        createRecord({
+        mutateAsync({
           city: city,
           name: plusOneName,
           ghLink: plusOneGH || "QueerJS",
         });
       }
+      await utils.invalidate();
     }
   };
 
@@ -48,7 +50,7 @@ const Signup = ({ onSubmit, city }) => {
           id="name"
           placeholder="Name"
           type="text"
-          minLength="2"
+          minLength={2}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -61,20 +63,16 @@ const Signup = ({ onSubmit, city }) => {
           placeholder="QueerJS"
           pattern="[A-Za-z0-9-]{1,30}"
           value={gh}
-          onInvalid={(e) =>
-            e.target.setCustomValidity(
-              `A GitHub handle, e.g. 'QueerJS' for 'https://github.com/queerjs'`,
-            )
-          }
           onChange={(e) => setGH(e.target.value.trim())}
         />
       </label>
-      <label htmlFor="plus-one" className="flex">
+      <label htmlFor="plus-one" className="flex gap-2">
         <input
+          className="!w-auto"
           id="plus-one"
           type="checkbox"
           pattern="[a-zA-Z0-9]+"
-          value={plusOne}
+          value={plusOne as unknown as string}
           style={{ width: "auto !important", marginRight: "12px !important" }}
           onChange={(e) => setPlusOne(e.target.checked)}
         />
@@ -101,11 +99,6 @@ const Signup = ({ onSubmit, city }) => {
             placeholder="QueerJS"
             pattern="[A-Za-z0-9-]{1,30}"
             value={plusOneGH}
-            onInvalid={(e) =>
-              e.target.setCustomValidity(
-                `A GitHub handle, e.g. 'QueerJS' for 'https://github.com/queerjs'`,
-              )
-            }
             onChange={(e) => setPlusOneGH(e.target.value.trim())}
           />
         </label>

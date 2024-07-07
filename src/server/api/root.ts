@@ -1,4 +1,5 @@
 import { meetupRouter } from "~/server/api/routers/meetup";
+import { attendeesRouter } from "~/server/api/routers/attendees";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -8,6 +9,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   meetup: meetupRouter,
+  attendees: attendeesRouter,
 });
 
 // export type definition of API

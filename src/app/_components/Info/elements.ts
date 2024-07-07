@@ -6,7 +6,6 @@ export const Info = styled.div`
   border: 3px solid ${(props) => props.theme.white};
   align-items: center;
   margin-bottom: 10px;
-  font-family: "Roboto Mono";
   position: relative;
   justify-content: space-between;
 
@@ -26,10 +25,10 @@ export const Button = styled.button`
   -webkit-appearance: none;
   border: none;
   width: 100%;
-  font-family: "Roboto Mono";
   font-weight: 600;
   font-size: 1em;
   cursor: pointer;
+  color: ${(props) => props.theme.darkPurple};
 
   &:hover {
     transform: scale(1.025);
@@ -42,7 +41,6 @@ export const RsvpButton = styled(Button)`
   -webkit-appearance: none;
   border: none;
   width: 100%;
-  font-family: "Roboto Mono";
   font-weight: 600;
   margin-bottom: 50px;
   font-size: 1em;
@@ -66,7 +64,6 @@ export const Form = styled.form`
   -webkit-appearance: none;
   border: 3px solid ${(props) => props.theme.white};
   width: 100%;
-  font-family: "Roboto Mono";
   font-weight: 600;
   margin-bottom: 50px;
   padding: 4em;

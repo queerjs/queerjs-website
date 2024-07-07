@@ -34,7 +34,7 @@ const AttendeesComponent = ({ attendees }: Props) => {
 
   return (
     <Attendees>
-      {shuffle(dedupedAttendees).map(({ data: a }) => {
+      {shuffle(dedupedAttendees).map((a) => {
         // Pretty ugly but this way we do not get duplicate https://github.com urls
 
         const cleanGhLink =

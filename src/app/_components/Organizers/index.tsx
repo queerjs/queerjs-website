@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 import {
   InlineRainbow,
@@ -6,21 +6,26 @@ import {
   OrganizersGrid,
   Unstyled,
   ListItem,
-  UnstyledLink
-} from './elements'
+  UnstyledLink,
+} from "./elements";
+import { organizers } from "@prisma/client";
 
-const size = 100
+const size = 100;
 
-const humanHref = (human) => {
-  if (human.githubLink) {
-    return `https://github.com/${human.githubLink}`
+const humanHref = (human: organizers) => {
+  if (human.github) {
+    return `https://github.com/${human.github}`;
   }
-  if (human.twitterLink || human.twitterHandle) {
-    return `https://twitter.com/${human.twitterLink || human.twitterHandle}`
+  if (human.twitter) {
+    return `https://twitter.com/${human.twitter}`;
   }
-}
+};
 
-const Organizers = ({ organizers }) => {
+const Organizers = ({
+  organizers,
+}: {
+  organizers: (organizers & { colors?: string[] })[];
+}) => {
   return (
     <OrganizersGrid size={size}>
       {organizers.map((human) => (
@@ -33,11 +38,15 @@ const Organizers = ({ organizers }) => {
             title={human.name}
           >
             <OrganizerPhoto size={size}>
-              <InlineRainbow flag={human.colors} />
+              {human.colors ? (
+                <InlineRainbow flag={human.colors} />
+              ) : (
+                <InlineRainbow />
+              )}
               <img
-                width={size + 'px'}
-                height={size + 'px'}
-                src={`https://github.com/${human.githubLink}.png`}
+                width={size + "px"}
+                height={size + "px"}
+                src={`https://github.com/${human.github}.png`}
                 alt="Organizer"
               />
             </OrganizerPhoto>
@@ -46,7 +55,7 @@ const Organizers = ({ organizers }) => {
         </ListItem>
       ))}
     </OrganizersGrid>
-  )
-}
+  );
+};
 
-export default Organizers
+export default Organizers;

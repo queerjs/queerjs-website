@@ -6,15 +6,32 @@ import Flag from "../icons/flag";
 import Calendar from "../icons/calendar";
 
 import { Info, RsvpButton, Blinker, Bouncer } from "./elements";
+import { meetups } from "@prisma/client";
 
-const InfoComponent = ({ site, city, info, attendeesNumber }) => {
+type Props = meetups & {
+  attendeesNumber: number;
+};
+
+const InfoComponent = ({
+  attendeesNumber,
+  maxCapacity,
+  date,
+  rsvpsClosed,
+  googleMapsLink,
+  locationName,
+  bySeason,
+  calendarLink,
+  slug,
+}: Props) => {
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const closeRSVP =
-    (info.maxCapacity && attendeesNumber >= info.maxCapacity) ||
-    info.rsvpsClosed ||
-    isPast(new Date(info.date));
+  // const closeRSVP =
+  //   (maxCapacity && attendeesNumber >= maxCapacity) ||
+  //   rsvpsClosed ||
+  //   isPast(new Date(date as any));
+
+  const closeRSVP = false;
 
   return (
     <>
@@ -22,21 +39,26 @@ const InfoComponent = ({ site, city, info, attendeesNumber }) => {
         <Flag />
         <span>
           Location:{" "}
-          <a
-            href={site.googleMapsLink}
-            target="_blank"
-            title="Location"
-            rel="noopener noreferrer"
-          >
-            {site.location}
-          </a>
+          {googleMapsLink ? (
+            <a
+              href={googleMapsLink}
+              target="_blank"
+              title="Location"
+              rel="noopener noreferrer"
+            >
+              {locationName}
+            </a>
+          ) : (
+            locationName
+          )}
         </span>
         <span>
-          {info.bySeason ? (
-            <p>{info.bySeason}</p>
+          {bySeason ? (
+            <p>{bySeason}</p>
           ) : (
-            <a href={site.calendarLink} title="Add to Calendar">
-              {info.hour} {format(new Date(info.date), ["do 'of' MMMM"])}
+            <a href={calendarLink as string} title="Add to Calendar">
+              {format(new Date(date), "HH:mm")}{" "}
+              {format(new Date(date), "do 'of' MMMM")}
             </a>
           )}
         </span>
@@ -44,7 +66,7 @@ const InfoComponent = ({ site, city, info, attendeesNumber }) => {
       </Info>
       {!open ? (
         <RsvpButton
-          onClick={() => (!site.rsvpLink ? setOpen(true) : () => {})}
+          onClick={() => setOpen(true)}
           style={
             submitted || closeRSVP
               ? {
@@ -59,23 +81,8 @@ const InfoComponent = ({ site, city, info, attendeesNumber }) => {
               <Blinker delay={1}>{">"}</Blinker>
               <Blinker delay={2}>{">"}</Blinker>
               <Blinker delay={3}>{">"}</Blinker>{" "}
-              {site.rsvpLink && (
-                <Bouncer>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={site.rsvpLink}
-                  >
-                    RSVP NOW
-                  </a>
-                </Bouncer>
-              )}
-              {!site.rsvpLink && !submitted ? (
-                <Bouncer>RSVP NOW</Bouncer>
-              ) : null}{" "}
-              {!site.rsvpLink && submitted ? (
-                <Bouncer>YOU ARE AWESOME</Bouncer>
-              ) : null}
+              {!submitted ? <Bouncer>RSVP NOW</Bouncer> : null}{" "}
+              {submitted ? <Bouncer>YOU ARE AWESOME</Bouncer> : null}
               <Blinker delay={3}>{"<"}</Blinker>
               <Blinker delay={2}>{"<"}</Blinker>
               <Blinker delay={1}>{"<"}</Blinker>
@@ -87,7 +94,7 @@ const InfoComponent = ({ site, city, info, attendeesNumber }) => {
         </RsvpButton>
       ) : (
         <Rsvp
-          city={city}
+          city={slug}
           onSubmit={() => {
             setOpen(false);
             setSubmitted(true);

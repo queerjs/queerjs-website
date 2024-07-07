@@ -11,33 +11,40 @@ import {
   ListItem,
   UnstyledLink,
 } from "./elements";
+import { speakers } from "@prisma/client";
 
-const Speakers = ({ noSpeak, speakers, cfp }) => {
+type Props = {
+  noSpeak?: boolean;
+  cfp: boolean;
+  speakers: speakers[];
+};
+
+const Speakers = ({ noSpeak, speakers, cfp }: Props) => {
   return (
     <SpeakersGrid>
       {speakers?.map((human) => {
-        const Wrapper = human.link || human.twitterLink ? UnstyledLink : "div";
+        const Wrapper = human.link ? UnstyledLink : "div";
         return (
           <ListItem
             talk={human.talk}
-            key={human.twitterLink}
+            key={human.xata_id}
             data-tooltip={`I'm speaking about ${human.talk}!`}
           >
             <Wrapper
               as="a"
-              href={human.link || `https://twitter.com/${human.twitterLink}`}
+              href={human.link || "#"}
               target="_blank"
               rel="noopener noreferrer"
               title={human.name}
             >
               <SpeakerPhoto>
-                {human.githubLink ? (
+                {human.github ? (
                   <>
-                    <InlineRainbow flag={human.colors} />
+                    <InlineRainbow />
                     <img
-                      width="240"
-                      height="240"
-                      src={`https://github.com/${human.githubLink}.png`}
+                      width={240}
+                      height={240}
+                      src={`https://github.com/${human.github}.png`}
                       alt="Speaker"
                     />
                   </>

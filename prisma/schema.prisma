@@ -84,8 +84,6 @@ model meetups {
   xata_version                           Int                 @default(0)
   xata_createdat                         DateTime            @default(now()) @db.Timestamptz(6)
   city                                   String?
-  slug                                   String?             @unique(map: "meetups__pgroll_new_slug_key")
-  date                                   DateTime?           @db.Timestamptz(6)
   icon                                   Json?
   icon_hover                             Json?
   food                                   Boolean?            @default(false)
@@ -98,6 +96,9 @@ model meetups {
   fullDescription                        Boolean?            @default(false)
   locationName                           String?
   bySeason                               String?
+  announcement                           Json?
+  date                                   DateTime            @db.Timestamptz(6)
+  slug                                   String              @unique(map: "meetups__pgroll_new_slug_key")
   meetup_atendees                        meetup_atendees[]
   meetup_hosts                           meetup_hosts[]
   meetup_organziers                      meetup_organziers[]
@@ -134,6 +135,7 @@ model speakers {
   talk            String?
   link            String?
   MC              Boolean?          @default(false)
+  location        String?
   meetup_speakers meetup_speakers[]
 }
 

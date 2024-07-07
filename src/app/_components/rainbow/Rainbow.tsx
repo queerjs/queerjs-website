@@ -10,12 +10,12 @@ type Props = {
   onClick: () => void;
 };
 
-const Rainbow = ({ stripes, children, ...other }: Props) => {
+const Rainbow = ({ stripes, children, className }: Props) => {
   const max = 10;
   const streeps = new Array(max).fill(undefined);
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <SubWrapper>
         {streeps.map((_, i) => {
           const { color, size } = stripes[i] || { color: "black", size: 0 };

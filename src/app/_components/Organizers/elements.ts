@@ -2,7 +2,7 @@ import styled from "styled-components";
 import RainbowWithClicker from "../rainbow/RainbowWithClicker";
 import Link from "next/link";
 
-export const InlineRainbow = styled(RainbowWithClicker)`
+export const InlineRainbow = styled(RainbowWithClicker)<{ flag?: any }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -15,7 +15,7 @@ export const InlineRainbow = styled(RainbowWithClicker)`
   will-change: transform;
 `;
 
-export const OrganizerPhoto = styled.div`
+export const OrganizerPhoto = styled.div<{ size: number }>`
   position: relative;
   overflow: hidden;
   transition: 0.2s;
@@ -40,7 +40,7 @@ export const OrganizerPhoto = styled.div`
   }
 `;
 
-export const OrganizersGrid = styled.ul`
+export const OrganizersGrid = styled.ul<{ size: number }>`
   display: grid;
   grid-gap: 10px;
   text-align: center;
