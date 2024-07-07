@@ -5,7 +5,9 @@ type Props = {
   className?: string;
   flag?: string;
   stripes: any;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  style?: any;
+  onClick: () => void;
 };
 
 const Rainbow = ({ stripes, children, ...other }: Props) => {
@@ -13,7 +15,7 @@ const Rainbow = ({ stripes, children, ...other }: Props) => {
   const streeps = new Array(max).fill(undefined);
 
   return (
-    <Wrapper {...other}>
+    <Wrapper>
       <SubWrapper>
         {streeps.map((_, i) => {
           const { color, size } = stripes[i] || { color: "black", size: 0 };

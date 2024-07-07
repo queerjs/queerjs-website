@@ -1,22 +1,24 @@
-import React from 'react'
+import React from "react";
+import styled from "styled-components";
+
+const CalendarIcon = styled.svg`
+  position: absolute;
+  right: -21px;
+  bottom: -26px;
+  transition: transform 200ms ease;
+
+  &:hover {
+    transform: rotate(720deg);
+  }
+`;
 
 const Calendar = () => (
-  <svg
+  <CalendarIcon
     width="50px"
     height="53px"
     viewBox="0 0 50 53"
     version="1.1"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    css={`
-      position: absolute;
-      right: -21px;
-      bottom: -26px;
-      transition: transform 200ms ease;
-
-      &:hover {
-        transform: rotate(720deg);
-      }
-    `}
   >
     <g
       transform="translate(-550.000000, -185.000000) translate(575.500000, 210.500000) rotate(17.000000) translate(-575.500000, -210.500000) translate(556.000000, 188.000000)"
@@ -60,7 +62,7 @@ const Calendar = () => (
         fill="#000"
       />
     </g>
-  </svg>
-)
+  </CalendarIcon>
+);
 
-export default Calendar
+export default Calendar;

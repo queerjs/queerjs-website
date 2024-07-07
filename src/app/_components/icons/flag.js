@@ -1,22 +1,24 @@
-import React from 'react'
+import React from "react";
+import styled from "styled-components";
+
+const FlagIcon = styled.svg`
+  position: absolute;
+  left: -21px;
+  top: -26px;
+  transition: transform 200ms ease;
+
+  &:hover {
+    transform: rotate(720deg);
+  }
+`;
 
 const Flag = () => (
-  <svg
+  <FlagIcon
     width="52px"
     height="56px"
     viewBox="0 0 52 56"
     version="1.1"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    css={`
-      position: absolute;
-      left: -21px;
-      top: -26px;
-      transition: transform 200ms ease;
-
-      &:hover {
-        transform: rotate(720deg);
-      }
-    `}
   >
     <g
       transform="translate(-177.000000, -152.000000) translate(204.500000, 180.500000) rotate(-13.000000) translate(-204.500000, -180.500000) translate(181.000000, 157.000000)"
@@ -26,7 +28,10 @@ const Flag = () => (
       fill="none"
     >
       <g transform="translate(1.000000, 1.000000)">
-        <path d="M32.86 8.52V1.825a1.826 1.826 0 0 1-1.825 1.825H0V8.52h32.86z" fill="#FF5D7D" />
+        <path
+          d="M32.86 8.52V1.825a1.826 1.826 0 0 1-1.825 1.825H0V8.52h32.86z"
+          fill="#FF5D7D"
+        />
         <polygon
           fill="#FF764E"
           points="32.8602231 8.51942191 9.12778905e-05 8.51942191 9.12778905e-05 13.3875456 32.8602231 13.3875456 32.8602231 9.73624746"
@@ -82,7 +87,7 @@ const Flag = () => (
       />
       <path d="M11 5a1 1 0 0 0 0-2 1 1 0 1 0 0 2z" fill="#000" />
     </g>
-  </svg>
-)
+  </FlagIcon>
+);
 
-export default Flag
+export default Flag;

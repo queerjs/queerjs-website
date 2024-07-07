@@ -2,14 +2,15 @@ import React from "react";
 
 import { Attendees } from "./elements";
 import { shuffle } from "../../utils/shuffle";
+import { attendees } from "@prisma/client";
 
-const dedupeAttendees = (attendeesArray: any[]) => {
+const dedupeAttendees = (attendeesArray: attendees[]) => {
   const list: any[] = [];
   const deduped = attendeesArray.reduce((acc, current) => {
     const cleanGhLink =
-      current.data.ghLink && current.data.ghLink.startsWith("@")
-        ? current.data.ghLink.slice(1)
-        : current.data.ghLink;
+      current.ghLink && current.ghLink.startsWith("@")
+        ? current.ghLink.slice(1)
+        : current.ghLink;
 
     if (list.includes(cleanGhLink)) {
       return acc;
@@ -19,12 +20,16 @@ const dedupeAttendees = (attendeesArray: any[]) => {
     acc.push(current);
 
     return acc;
-  }, []);
+  }, [] as attendees[]);
 
   return deduped;
 };
 
-const AttendeesComponent = ({ attendees }) => {
+type Props = {
+  attendees: attendees[];
+};
+
+const AttendeesComponent = ({ attendees }: Props) => {
   const dedupedAttendees = dedupeAttendees(attendees);
 
   return (

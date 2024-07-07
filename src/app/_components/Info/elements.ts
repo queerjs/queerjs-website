@@ -1,12 +1,12 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes } from "styled-components";
 
 export const Info = styled.div`
   display: flex;
   flex-direction: row;
-  border: 3px solid ${props => props.theme.white};
+  border: 3px solid ${(props) => props.theme.white};
   align-items: center;
   margin-bottom: 10px;
-  font-family: 'Roboto Mono';
+  font-family: "Roboto Mono";
   position: relative;
   justify-content: space-between;
 
@@ -15,18 +15,18 @@ export const Info = styled.div`
     padding: 1em 1.5em;
 
     &:not(:first-of-type) {
-      border-left: 3px solid ${props => props.theme.white};
+      border-left: 3px solid ${(props) => props.theme.white};
     }
   }
-`
+`;
 
 export const Button = styled.button`
   padding: 1em;
-  background: ${props => props.theme.white};
+  background: ${(props) => props.theme.white};
   -webkit-appearance: none;
   border: none;
   width: 100%;
-  font-family: 'Roboto Mono';
+  font-family: "Roboto Mono";
   font-weight: 600;
   font-size: 1em;
   cursor: pointer;
@@ -34,22 +34,22 @@ export const Button = styled.button`
   &:hover {
     transform: scale(1.025);
   }
-`
+`;
 
 export const RsvpButton = styled(Button)`
   padding: 1em;
-  background: ${props => props.theme.white};
+  background: ${(props) => props.theme.white};
   -webkit-appearance: none;
   border: none;
   width: 100%;
-  font-family: 'Roboto Mono';
+  font-family: "Roboto Mono";
   font-weight: 600;
   margin-bottom: 50px;
   font-size: 1em;
   cursor: pointer;
 
   a {
-    color: ${props => props.theme.darkPurple};
+    color: ${(props) => props.theme.darkPurple};
   }
 
   &:hover {
@@ -59,14 +59,14 @@ export const RsvpButton = styled(Button)`
   strong {
     text-decoration: underline;
   }
-`
+`;
 
 export const Form = styled.form`
-  color: ${props => props.theme.white};
+  color: ${(props) => props.theme.white};
   -webkit-appearance: none;
-  border: 3px solid ${props => props.theme.white};
+  border: 3px solid ${(props) => props.theme.white};
   width: 100%;
-  font-family: 'Roboto Mono';
+  font-family: "Roboto Mono";
   font-weight: 600;
   margin-bottom: 50px;
   padding: 4em;
@@ -76,7 +76,7 @@ export const Form = styled.form`
 
   input {
     padding: 8px 12px;
-    border: 1px solid ${props => props.theme.lightGrey};
+    border: 1px solid ${(props) => props.theme.lightGrey};
     margin: 5px 0 20px;
     width: 100%;
     display: block;
@@ -85,7 +85,7 @@ export const Form = styled.form`
   label {
     text-decoration: underline;
   }
-`
+`;
 
 export const blink = keyframes`
   from {
@@ -98,23 +98,23 @@ export const blink = keyframes`
     opacity: 1;
     transform: scale(1.2)
   }
-`
+`;
 
-export const Blinker = styled.span`
-  animation: ${blink} 0.5s ${p => p.delay / 10}s linear infinite alternate;
+export const Blinker = styled.span<{ delay: number }>`
+  animation: ${blink} 0.5s ${(p) => p.delay / 10}s linear infinite alternate;
   display: inline-block;
-`
+`;
 
-export const bounc = keyframes`
+export const bounce = keyframes`
   from {
     transform: scale(1)
   }
   to {
     transform: scale(1.1)
   }
-`
+`;
 
 export const Bouncer = styled.strong`
-  animation: ${bounc} 0.5s linear infinite alternate;
+  animation: ${bounce} 0.5s linear infinite alternate;
   display: inline-block;
-`
+`;

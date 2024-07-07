@@ -239,19 +239,20 @@ export const allStripes = [
   },
 ];
 
-const useStripesInCtx = () => {
-  const [stripes, setStripes] = useState(0);
-  const cycle = () => setStripes((s) => (s + 1) % allStripes.length);
-  return [allStripes[stripes]?.stripes, { cycle }];
-};
-
 const RainbowContext = createContext([gayStripes, {}]);
 
-const RainbowProvider = ({ children }: { children: any }) => (
-  <RainbowContext.Provider value={useStripesInCtx() as any}>
-    {children}
-  </RainbowContext.Provider>
-);
+const RainbowProvider = ({ children }: { children: any }) => {
+  const [stripes, setStripes] = useState(0);
+  const cycle = () => setStripes((s) => (s + 1) % allStripes.length);
+
+  return (
+    <RainbowContext.Provider
+      value={[allStripes[stripes]?.stripes as any, { cycle }]}
+    >
+      {children}
+    </RainbowContext.Provider>
+  );
+};
 
 const useRainbow = () => useContext(RainbowContext);
 

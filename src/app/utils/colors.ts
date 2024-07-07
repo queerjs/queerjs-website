@@ -1,10 +1,4 @@
-/**
- * @param {number} r
- * @param {number} g
- * @param {number} b
- * @return {[number, number, number]}
- */
-export function RGBToHSL(r, g, b) {
+export function RGBToHSL(r: any, g: any, b: any) {
   // Make r, g, and b fractions of 1
   r /= 255;
   g /= 255;
@@ -47,14 +41,11 @@ export function RGBToHSL(r, g, b) {
 
   return [h, s, l];
 }
-/**
- * @param {string} h
- * @return {[number, number, number]}
- */
-export function hexToRGB(h) {
-  let r = 0;
-  let g = 0;
-  let b = 0;
+
+export function hexToRGB(h: string) {
+  let r = "0";
+  let g = "0";
+  let b = "0";
 
   // 3 digits
   if (h.length === 4) {
@@ -72,23 +63,19 @@ export function hexToRGB(h) {
   return [r, g, b];
 }
 
-/**
- * @param h
- * @param s
- * @param l
- * @return {string}
- */
-export function hslString(h, s, l) {
+export function hslString(h: number, s: number, l: number) {
   return "hsl(" + h + "," + s + "%," + l + "%)";
 }
 
-/**
- * @param {string} hex
- * @return {string}
- */
-export function toPastel(hex) {
+export function toPastel(hex: string) {
   return [hex]
     .map(hexToRGB)
     .map(([r, g, b]) => RGBToHSL(r, g, b))
-    .map(([h, s, l]) => hslString(h, s * 0.9, l + (100 - l) * 0.2))[0];
+    .map(([h, s, l]) =>
+      hslString(
+        h as number,
+        (s as number) * 0.9,
+        (l as number) + (100 - (l as number)) * 0.2,
+      ),
+    )[0];
 }
